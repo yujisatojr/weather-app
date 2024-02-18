@@ -1,7 +1,8 @@
-from flask import render_template, jsonify
+from flask import render_template, jsonify, send_file, request
 import requests
 from app import app
 from config import api_key
+from utils import format_unix_time, kelvin_to_celsius, celsius_to_fahrenheit
 
 @app.route('/')
 def index():
@@ -23,21 +24,54 @@ def get_coordinate(city_name):
     else:
         return None
 
-@app.route('/current')
+@app.route('/current_weather')
 def get_current_weather():
     # Get the current weather data by city name
     API_KEY = api_key
-    city_name = 'dallas'
-    lat, lon = get_coordinate(city_name)
+    city_name = request.args.get('city_name', default=None)
+
+    if city_name == None:
+        lat, lon = 39.76, -98.5 # Set default coordinates as United States
+    else:
+        lat, lon = get_coordinate(city_name)
 
     if not lat or not lon:
         return jsonify({'error': 'Unable to fetch coordinates for the specified city'}), 404
 
-    url = f'https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&appid={API_KEY}'
+    url = f'https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude=minutely,hourly,daily&appid={API_KEY}'
     response = requests.get(url)
     data = response.json()
 
     if response.status_code == 200:
-        return jsonify(data)
+        current_weather = data.get('current', {})
+        weather_description = current_weather.get('weather', [{}])[0]
+        current_time = format_unix_time(current_weather.get('dt', 0), data.get('timezone_offset', 0))
+        temp_c = kelvin_to_celsius(current_weather.get('temp', 0))
+        temp_f = celsius_to_fahrenheit(temp_c)
+
+        formatted_response = {
+            'main_weather': current_weather.get('main', ''),
+            'description': weather_description.get('description', ''),
+            'icon_id': weather_description.get('icon', ''),
+            'current_time': current_time,
+            'humidity': current_weather.get('humidity', 0),
+            'temp_c': temp_c,
+            'temp_f': temp_f,
+            'latitude': data.get('lat', 0),
+            'longitude': data.get('lon', 0),
+        }
+        return jsonify(formatted_response)
     else:
         return jsonify({'error': 'Unable to fetch current weather'}), 500
+
+@app.route('/weather_icon/<icon_id>')
+def get_weather_icon():
+    # Get the weather image by icon ID
+    icon_id = request.args.get('weather_icon', default=None)
+    api_url = f'https://openweathermap.org/img/wn/{icon_id}@2x.png'
+
+    response = requests.get(api_url)
+    if response.status_code == 200:
+        return send_file(response, mimetype='image/png')
+    else:
+        return jsonify({'error': 'Error fetching weather icon'}), 500
