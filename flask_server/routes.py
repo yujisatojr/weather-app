@@ -104,14 +104,14 @@ def get_historical_weather():
     else:
         return jsonify({'error': 'Unable to fetch current weather'}), 500
 
-@app.route('/weather_icon/<icon_id>')
-def get_weather_icon():
-    # Get the weather image by icon ID
-    icon_id = request.args.get('weather_icon', default=None)
-    api_url = f'https://openweathermap.org/img/wn/{icon_id}@2x.png'
+# @app.route('/weather_icon/<icon_id>')
+# def get_weather_icon():
+#     # Get the weather image by icon ID
+#     icon_id = request.args.get('icon_id', default=None)
+#     api_url = f'https://openweathermap.org/img/wn/{icon_id}@2x.png'
 
-    response = requests.get(api_url)
-    if response.status_code == 200:
-        return send_file(response, mimetype='image/png')
-    else:
-        return jsonify({'error': 'Error fetching weather icon'}), 500
+#     response = requests.get(api_url)
+#     if response.status_code == 200:
+#         return response
+#     else:
+#         return jsonify({'error': 'Error fetching weather icon'}), 500
