@@ -49,7 +49,6 @@ def get_current_weather():
     if response.status_code == 200:
         current_weather = data.get('current', {})
         daily_weather = data.get('daily', {})[0]
-        print(daily_weather)
         weather_description = current_weather.get('weather', [{}])[0]
         current_time = format_unix_time(current_weather.get('dt', 0), data.get('timezone_offset', 0))
         temp_c = kelvin_to_celsius(current_weather.get('temp', 0))
