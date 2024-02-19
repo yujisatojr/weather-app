@@ -65,7 +65,7 @@ def get_current_weather():
     else:
         return jsonify({'error': 'Unable to fetch current weather'}), 500
     
-@app.route('/historical_weather')
+@app.route('/historical_weather/<time>')
 def get_historical_weather():
     # Get the historical weather data by city name
     API_KEY = api_key
