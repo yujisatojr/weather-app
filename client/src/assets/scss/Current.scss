@@ -5,10 +5,21 @@
     padding: 20px;
   
     .location {
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      margin-block-start: 0px;
+      margin-block-end: 0px;
     }
+
+    .location-geocodes {
+        display: flex;
+        flex-direction: row;
+        font-size: 12px;
+        color: gray;
+
+        .lat {
+            margin-right: 15px;
+        }
+      }
   
     .weather-info {
         display: flex;
@@ -20,6 +31,10 @@
             display: flex;
             align-items: center;
             font-size: 24px;
+
+            span {
+                font-size: 40px;
+            }
     
             img {
             max-width: 100px;
@@ -28,6 +43,7 @@
         }
     
         .time-description {
+            font-size: 14px;
             display: flex;
             flex-direction: column;
             text-align: right;
@@ -36,9 +52,20 @@
   
     .additional-info {
         margin-top: 15px;
+        width: 100%;
+        display: flex;
+
+        svg {
+            vertical-align: middle;
+            font-size: 18px;
+        }
     
         .precipitation,
-        .wind {
+        .humidity,
+        .wind,
+        .lat,
+        .lon
+         {
             font-size: 14px;
             margin-bottom: 5px;
         }
