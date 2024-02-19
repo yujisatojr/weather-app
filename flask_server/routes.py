@@ -8,32 +8,36 @@ from utils import format_unix_time, kelvin_to_celsius, celsius_to_fahrenheit
 def index():
     return render_template('index.html')
 
-@app.route('/coordinate/<city_name>')
-def get_coordinate(city_name):
+@app.route('/coordinates')
+def get_coordinates():
     # Use Geocoding API to convert city name to latitude and longitude
     API_KEY = api_key
-    url = f'http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={API_KEY}'
+    city_name = request.args.get('city_name', default=None)
+    url = f'http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=5&appid={API_KEY}'
 
     response = requests.get(url)
     data = response.json()
 
     if response.status_code == 200 and data:
-        lat = data[0]['lat']
-        lon = data[0]['lon']
-        return lat, lon
+        result = []
+        for location in data:
+            result_dict = {
+                'lat': location['lat'],
+                'lon': location['lon'],
+                'location': f"{location['name']}, {location['state'] if 'state' in location else ''}, {location['country']}"
+            }
+            result.append(result_dict)
+
+        return jsonify(result)
     else:
-        return None
+        return jsonify([])
 
 @app.route('/current_weather')
 def get_current_weather():
     # Get the current weather data by city name
     API_KEY = api_key
-    city_name = request.args.get('city_name', default=None)
-
-    if city_name == None:
-        lat, lon = 39.76, -98.5 # Set default coordinates as United States
-    else:
-        lat, lon = get_coordinate(city_name)
+    lat = request.args.get('lat', default=None)
+    lon = request.args.get('lon', default=None)
 
     if not lat or not lon:
         return jsonify({'error': 'Unable to fetch coordinates for the specified city'}), 404

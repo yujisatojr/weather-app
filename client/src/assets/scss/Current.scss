@@ -1,0 +1,61 @@
+.current_weather_root {
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.current_weather_form {
+    padding: 4px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.current_weather_form_result {
+    width: 100%;
+}
+
+.weather-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  
+    .location {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  
+    .weather-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+  
+      .temperature {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+  
+        img {
+          max-width: 100px;
+          max-height: 100px;
+        }
+      }
+  
+      .time-description {
+        display: flex;
+        flex-direction: column;
+        text-align: right;
+      }
+    }
+  
+    .additional-info {
+      margin-top: 15px;
+  
+      .precipitation,
+      .wind {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+    }
+}
