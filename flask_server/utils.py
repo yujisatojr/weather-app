@@ -16,7 +16,7 @@ def format_unix_time(unix_time, timezone):
 
 # Convert temperature
 def kelvin_to_celsius(temp_k):
-    return temp_k - 273.15
+    return round(temp_k - 273.15)
 
 def celsius_to_fahrenheit(temp_c):
-    return (temp_c * 9/5) + 32
+    return round((temp_c * 9/5) + 32)
