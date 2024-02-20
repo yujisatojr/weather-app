@@ -1,12 +1,14 @@
-from flask import render_template, jsonify, send_file, request
+from flask import render_template, jsonify, request, send_from_directory
 import requests
+import os
 from app import app
 #from config import api_key
 from utils import format_unix_time, kelvin_to_celsius, celsius_to_fahrenheit
 
-@app.route('/')
+# Serve React Frontend
+@app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
 @app.route('/coordinates')
 def get_coordinates():
