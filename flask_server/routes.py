@@ -2,7 +2,7 @@ from flask import render_template, jsonify, request, send_from_directory
 import requests
 from app import app
 #from config import api_key
-from utils import format_unix_time, kelvin_to_celsius, celsius_to_fahrenheit
+from flask_server.utils import format_unix_time, kelvin_to_celsius, celsius_to_fahrenheit
 
 #API_KEY = api_key
 
