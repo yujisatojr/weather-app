@@ -12,6 +12,7 @@ function parseDayOfWeek(dateString) {
 }
 
 function Historical({ parentToChild }) {
+
   const { lat, lon, weatherData } = parentToChild;
 
   const [historicalWeather, setHistoricalWeather] = useState([]);
@@ -44,7 +45,6 @@ function Historical({ parentToChild }) {
           console.error(`Error fetching historical weather for day ${i}: ${error.message}`);
         }
       }
-  
       setHistoricalWeather(historicalWeatherData);
     };
   
@@ -63,18 +63,18 @@ function Historical({ parentToChild }) {
             <h3>Last 7 days:</h3>
             <div className='history-wrapper' >
             {historicalWeather.map((weather, index) => (
-                <div className='history-value' key={index}>
-                  <div className='date'>{ parseDayOfWeek(weather.current_time) }</div>
-                  <div className='weather-info'>
-                    <img src={`https://openweathermap.org/img/wn/${weather.icon_id}@2x.png`} alt="Weather Icon" />
-                    <div className='temperature'>
-                      {weather.temp_f}°
-                    </div>
-                  </div>
-                  <div className='weather-details'>
-                    { weather.weather_description.charAt(0).toUpperCase() + weather.weather_description.slice(1) }
+              <div className='history-value' key={index}>
+                <div className='date'>{ parseDayOfWeek(weather.current_time) }</div>
+                <div className='weather-info'>
+                  <img src={`https://openweathermap.org/img/wn/${weather.icon_id}@2x.png`} alt="Weather Icon" />
+                  <div className='temperature'>
+                    {weather.temp_f}°
                   </div>
                 </div>
+                <div className='weather-details'>
+                  { weather.weather_description.charAt(0).toUpperCase() + weather.weather_description.slice(1) }
+                </div>
+              </div>
             ))}
             </div>
           </div>

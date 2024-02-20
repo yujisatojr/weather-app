@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import '../assets/scss/Home.scss';
+import { styled } from '@mui/material/styles';
+
+// Import child components
 import Current from './Current';
 import Historical from './Historical';
 
-// Import MUI components
+// Import MUI framework for styling
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
@@ -11,10 +15,6 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-
-// Import styles
-import '../assets/scss/Home.scss';
-import { styled } from '@mui/material/styles';
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),

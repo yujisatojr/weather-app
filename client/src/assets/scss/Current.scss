@@ -67,6 +67,16 @@
         width: 100%;
         display: flex;
 
+        .info-right {
+            flex: auto;
+            text-align: right;
+            align-self: flex-end;
+
+            button {
+                background-color: #fcb45c;
+            }
+        }
+
         svg {
             vertical-align: middle;
             font-size: 18px;

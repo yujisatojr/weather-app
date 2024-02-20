@@ -56,6 +56,7 @@ def get_current_weather():
         temp_f = celsius_to_fahrenheit(temp_c)
 
         formatted_response = {
+            'raw_json': data,
             'main_weather': weather_description.get('main', ''),
             'description': weather_description.get('description', ''),
             'icon_id': weather_description.get('icon', ''),

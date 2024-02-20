@@ -1,14 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import '../assets/scss/Current.scss';
+
+// Import MUI framework for styling
 import AirIcon from '@mui/icons-material/Air';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import WaterIcon from '@mui/icons-material/Water';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+  height: '500px',
+  width: '600px',
+  overflow: 'scroll',
+};
 
 function Current({ parentToChild, onWeatherDataChange }) {
 
   const { lat, lon, selectedLocation } = parentToChild;
   
   const [weatherData, setWeatherData] = useState(null);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const PrettyJsonDisplay = ({ jsonString }) => {
+    const jsonObject = JSON.parse(jsonString);
+    const prettyJsonString = JSON.stringify(jsonObject, null, 2);
+    return (
+      <pre>
+        {prettyJsonString}
+      </pre>
+    );
+  };
 
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -61,6 +96,25 @@ function Current({ parentToChild, onWeatherDataChange }) {
               <div className="precipitation"><WaterDropIcon/>Precipitation: {Math.round(weatherData.precipitation * 100)}%</div>
               <div className="humidity"><WaterIcon/>Humidity: {weatherData.humidity}%</div>
               <div className="wind"><AirIcon/>Wind speed: {weatherData.wind_speed}m/s</div>
+            </div>
+            <div className='info-right'>
+              <Button onClick={handleOpen} variant="contained" endIcon={<VisibilityIcon />}>
+                View output
+              </Button>
+              <Modal
+                className='raw-json-modal'
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <Typography id="modal-modal-title" variant="h6" component="h2">
+                    Raw JSON Output from API
+                  </Typography>
+                  <PrettyJsonDisplay jsonString={JSON.stringify(weatherData.raw_json)}/>
+                </Box>
+              </Modal>
             </div>
           </div>
         </div>
