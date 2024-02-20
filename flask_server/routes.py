@@ -2,11 +2,12 @@ from flask import render_template, jsonify, request, send_from_directory
 import requests
 from app import app
 import os
-from flask_server.config import api_key
+#from flask_server.config import api_key
 from flask_server.utils import format_unix_time, kelvin_to_celsius, celsius_to_fahrenheit
 
-API_KEY = api_key
-#API_KEY = os.environ.get('API_KEY')
+#API_KEY = api_key
+# For production: get API key on Render
+API_KEY = os.environ.get('API_KEY')
 
 # Serve React Frontend
 @app.route("/")
