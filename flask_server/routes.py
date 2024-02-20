@@ -1,7 +1,7 @@
 from flask import render_template, jsonify, send_file, request
 import requests
 from app import app
-from config import api_key
+#from config import api_key
 from utils import format_unix_time, kelvin_to_celsius, celsius_to_fahrenheit
 
 @app.route('/')
