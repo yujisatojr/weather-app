@@ -6,6 +6,7 @@ import AirIcon from '@mui/icons-material/Air';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
+import Skeleton from '@mui/material/Skeleton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import WaterIcon from '@mui/icons-material/Water';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
@@ -29,6 +30,7 @@ function Current({ parentToChild, onWeatherDataChange }) {
   const { lat, lon, selectedLocation } = parentToChild;
   
   const [weatherData, setWeatherData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Invoke modal
   const [open, setOpen] = React.useState(false);
@@ -48,6 +50,7 @@ function Current({ parentToChild, onWeatherDataChange }) {
 
   // Fetch current weather data
   useEffect(() => {
+    setIsLoading(true);
     const fetchWeatherData = async () => {
       try {
         // Check if lat and lon are defined before making the API call
@@ -58,6 +61,7 @@ function Current({ parentToChild, onWeatherDataChange }) {
             setWeatherData(data);
             // Pass weatherData to parent component
             onWeatherDataChange(data);
+            setIsLoading(false)
           } else {
             console.error('Error fetching weather data');
           }
@@ -119,7 +123,17 @@ function Current({ parentToChild, onWeatherDataChange }) {
           </div>
         </div>
       ) : (
-        <p>{selectedLocation ? 'Loading weather data...' : 'Welcome! Please enter the name of a city to see the weather information.'}</p>
+        <div>
+          {selectedLocation ? (
+            <div>
+              {isLoading && 
+                <Skeleton className='skeleton-area-current' height={150}></Skeleton>
+              }
+            </div>
+          ) : (
+              <p>Welcome! Please enter the name of a city to see the weather information.</p>
+          )}          
+        </div>
       )}
     </div>
   );

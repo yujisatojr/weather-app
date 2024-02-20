@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../assets/scss/Historical.scss';
 import ExportData from './ExportData';
 import Divider from '@mui/material/Divider';
+import Skeleton from '@mui/material/Skeleton';
 
 function parseDayOfWeek(dateString) {
   // Parse day of the week for each unix datetime
@@ -17,9 +18,11 @@ function Historical({ parentToChild }) {
   const { lat, lon, weatherData } = parentToChild;
 
   const [historicalWeather, setHistoricalWeather] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Fetch historical weather data by passing the current unix datetime
   useEffect(() => {
+    setIsLoading(true);
     const fetchHistoricalWeather = async () => {
       if (!lat || !lon || !weatherData?.unix_datetime) {
         console.error('Missing required parameters');
@@ -48,6 +51,7 @@ function Historical({ parentToChild }) {
         }
       }
       setHistoricalWeather(historicalWeatherData);
+      setIsLoading(false);
     };
   
     if (weatherData !== null) {
@@ -57,34 +61,40 @@ function Historical({ parentToChild }) {
 
   return (
     <div>
-      {historicalWeather.length > 0 && (
-      <div className='historical-root'>
-        <Divider/>
-        <div className='historical-weather-container'>
-          <div>
-            <h3>Last 7 days:</h3>
-            <div className='history-wrapper' >
-            {historicalWeather.map((weather, index) => (
-              <div className='history-value' key={index}>
-                <div className='date'>{ parseDayOfWeek(weather.date_time) }</div>
-                <div className='weather-info'>
-                  <img src={`https://openweathermap.org/img/wn/${weather.icon_id}@2x.png`} alt="Weather Icon" />
-                  <div className='temperature'>
-                    {weather.temp_f}°
+      {weatherData && isLoading ? (
+        <Skeleton className='skeleton-area-hist' height={300}></Skeleton>
+      ) : (
+        <div>
+        {historicalWeather.length > 0 && (
+          <div className='historical-root'>
+            <Divider/>
+            <div className='historical-weather-container'>
+              <div>
+                <h3>Last 7 days:</h3>
+                <div className='history-wrapper' >
+                {historicalWeather.map((weather, index) => (
+                  <div className='history-value' key={index}>
+                    <div className='date'>{ parseDayOfWeek(weather.date_time) }</div>
+                    <div className='weather-info'>
+                      <img src={`https://openweathermap.org/img/wn/${weather.icon_id}@2x.png`} alt="Weather Icon" />
+                      <div className='temperature'>
+                        {weather.temp_f}°
+                      </div>
+                    </div>
+                    <div className='weather-details'>
+                      { weather.weather_description.charAt(0).toUpperCase() + weather.weather_description.slice(1) }
+                    </div>
                   </div>
-                </div>
-                <div className='weather-details'>
-                  { weather.weather_description.charAt(0).toUpperCase() + weather.weather_description.slice(1) }
+                ))}
                 </div>
               </div>
-            ))}
+              <div className='historical-data-download'>
+                <ExportData data={historicalWeather} />
+              </div>
             </div>
           </div>
-          <div className='historical-data-download'>
-            <ExportData data={historicalWeather} />
-          </div>
+          )}
         </div>
-      </div>
       )}
     </div>
   );
