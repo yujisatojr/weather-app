@@ -6,7 +6,6 @@ import AirIcon from '@mui/icons-material/Air';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import WaterIcon from '@mui/icons-material/Water';
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
@@ -31,10 +30,12 @@ function Current({ parentToChild, onWeatherDataChange }) {
   
   const [weatherData, setWeatherData] = useState(null);
 
+  // Invoke modal
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // Format json file as a pretty string
   const PrettyJsonDisplay = ({ jsonString }) => {
     const jsonObject = JSON.parse(jsonString);
     const prettyJsonString = JSON.stringify(jsonObject, null, 2);
@@ -45,6 +46,7 @@ function Current({ parentToChild, onWeatherDataChange }) {
     );
   };
 
+  // Fetch current weather data
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
@@ -109,9 +111,7 @@ function Current({ parentToChild, onWeatherDataChange }) {
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={style}>
-                  <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Raw JSON Output from API
-                  </Typography>
+                  <h3>Raw JSON Output from API</h3>
                   <PrettyJsonDisplay jsonString={JSON.stringify(weatherData.raw_json)}/>
                 </Box>
               </Modal>

@@ -7,14 +7,14 @@ import Current from './Current';
 import Historical from './Historical';
 
 // Import MUI framework for styling
-import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import Paper from '@mui/material/Paper';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
@@ -23,6 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function Home() {
 
+  // Define state variables
   const [searchInput, setSearchInput] = useState('');
   const [locations, setLocations] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -35,6 +36,7 @@ function Home() {
     setWeatherData(data);
   };
 
+  // Fetch geo-coordinates (lat/lon) with a city name
   const handleSearchSubmit = async () => {
     try {
       const response = await fetch(`/coordinates?city_name=${searchInput}`);
@@ -49,6 +51,7 @@ function Home() {
     }
   };
 
+  // Set lat/lon variables when a user clicks on a city name
   const handleLocationClick = (clickedLat, clickedLon, clickedLocation) => {
     setLat(clickedLat);
     setLon(clickedLon);

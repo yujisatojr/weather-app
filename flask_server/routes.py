@@ -101,7 +101,7 @@ def get_historical_weather():
         weather_description = weather_data.get('weather', [{}])[0]
 
         formatted_response = {
-            'current_time': format_unix_time(weather_data.get('dt', 0), data.get('timezone_offset', 0)),
+            'date_time': format_unix_time(weather_data.get('dt', 0), data.get('timezone_offset', 0)),
             'temp_c': kelvin_to_celsius(weather_data.get('temp', 0)),
             'temp_f': celsius_to_fahrenheit(kelvin_to_celsius(weather_data.get('temp', 0))),
             'weather_main': weather_description.get('main', ''),

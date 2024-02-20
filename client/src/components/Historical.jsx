@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import '../assets/scss/Historical.scss';
+import ExportData from './ExportData';
 import Divider from '@mui/material/Divider';
 
 function parseDayOfWeek(dateString) {
-  
+  // Parse day of the week for each unix datetime
   const date = new Date(dateString);
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const dayIndex = date.getDay();
@@ -17,6 +18,7 @@ function Historical({ parentToChild }) {
 
   const [historicalWeather, setHistoricalWeather] = useState([]);
 
+  // Fetch historical weather data by passing the current unix datetime
   useEffect(() => {
     const fetchHistoricalWeather = async () => {
       if (!lat || !lon || !weatherData?.unix_datetime) {
@@ -64,7 +66,7 @@ function Historical({ parentToChild }) {
             <div className='history-wrapper' >
             {historicalWeather.map((weather, index) => (
               <div className='history-value' key={index}>
-                <div className='date'>{ parseDayOfWeek(weather.current_time) }</div>
+                <div className='date'>{ parseDayOfWeek(weather.date_time) }</div>
                 <div className='weather-info'>
                   <img src={`https://openweathermap.org/img/wn/${weather.icon_id}@2x.png`} alt="Weather Icon" />
                   <div className='temperature'>
@@ -77,6 +79,9 @@ function Historical({ parentToChild }) {
               </div>
             ))}
             </div>
+          </div>
+          <div className='historical-data-download'>
+            <ExportData data={historicalWeather} />
           </div>
         </div>
       </div>
