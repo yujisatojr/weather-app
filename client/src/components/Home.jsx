@@ -21,22 +21,6 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: 'left',
 }));
 
-function getGreeting() {
-  // Get current system time
-  var currentTime = new Date();
-  var currentHour = currentTime.getHours();
-  var greeting;
-
-  if (currentHour >= 0 && currentHour < 12) {
-      greeting = "Good Morning";
-  } else if (currentHour >= 12 && currentHour < 18) {
-      greeting = "Good Afternoon";
-  } else {
-      greeting = "Good Evening";
-  }
-  return greeting;
-}
-
 function Home() {
 
   const [searchInput, setSearchInput] = useState('');
@@ -74,7 +58,7 @@ function Home() {
 
   return (
     <div className='weather-app-root'>
-      <h1>{ getGreeting() }</h1>
+      <h1>Weather Dashboard 🌤️</h1>
       <div className='search-form-wrapper'>
         <div style={{ width: '100%', position: 'relative' }}>
           <Paper
@@ -88,8 +72,8 @@ function Home() {
           >
             <InputBase
               sx={{ ml: 1, flex: 1 }}
-              placeholder="Please type the location name..."
-              inputProps={{ 'aria-label': 'search location' }}
+              placeholder="Search City"
+              inputProps={{ 'aria-label': 'search city' }}
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />

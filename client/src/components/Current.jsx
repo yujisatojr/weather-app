@@ -38,7 +38,10 @@ function Current({ parentToChild, onWeatherDataChange }) {
     <div>
       {weatherData ? (
         <div className="weather-container">
-          <h2 className="location">{selectedLocation ? selectedLocation.name : 'Dallas, Texas (US)'}</h2>
+          <div className='weather-header'>
+            <h2 className="location">{selectedLocation ? selectedLocation.name : 'Dallas, Texas (US)'}</h2>
+            <span>{weatherData.current_time}</span>
+          </div>
           <div className='location-geocodes'>
             <div className="lat">Latitude: {weatherData.latitude}</div>
             <div className="lon">Longitude: {weatherData.longitude}</div>
@@ -49,8 +52,8 @@ function Current({ parentToChild, onWeatherDataChange }) {
               <span>{weatherData.temp_f}</span>°F
             </div>
             <div className="time-description">
-              <div className="time">{weatherData.current_time}</div>
-              <div className="description">{weatherData.main_weather} / {weatherData.description.charAt(0).toUpperCase() + weatherData.description.slice(1)}</div>
+              <div className="time">{weatherData.current_date}</div>
+              <div className="description">{weatherData.description.charAt(0).toUpperCase() + weatherData.description.slice(1)}</div>
             </div>
           </div>
           <div className="additional-info">
@@ -62,7 +65,7 @@ function Current({ parentToChild, onWeatherDataChange }) {
           </div>
         </div>
       ) : (
-        <p>{selectedLocation ? 'Loading weather data...' : 'Please enter a city to search.'}</p>
+        <p>{selectedLocation ? 'Loading weather data...' : 'Welcome! Please enter the name of a city to see the weather information.'}</p>
       )}
     </div>
   );

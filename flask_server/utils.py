@@ -8,8 +8,9 @@ def format_unix_time(unix_time, timezone):
 
         localized_datetime = utc_datetime + timedelta(seconds=timezone)
 
-        formatted_time = localized_datetime.strftime('%A %m/%d %I:%M %p')
-        return formatted_time
+        formatted_time = localized_datetime.strftime('%A %m/%d')
+        formatted_time_2 = localized_datetime.strftime('%I:%M %p')
+        return [ formatted_time, formatted_time_2 ]
     except Exception as e:
         print(f"Error formatting time: {e}")
         return ""

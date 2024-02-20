@@ -50,6 +50,7 @@ def get_current_weather():
         current_weather = data.get('current', {})
         daily_weather = data.get('daily', {})[0]
         weather_description = current_weather.get('weather', [{}])[0]
+        current_date = format_unix_time(current_weather.get('dt', 0), data.get('timezone_offset', 0))
         current_time = format_unix_time(current_weather.get('dt', 0), data.get('timezone_offset', 0))
         temp_c = kelvin_to_celsius(current_weather.get('temp', 0))
         temp_f = celsius_to_fahrenheit(temp_c)
@@ -59,7 +60,8 @@ def get_current_weather():
             'description': weather_description.get('description', ''),
             'icon_id': weather_description.get('icon', ''),
             'unix_datetime': current_weather.get('dt', 0),
-            'current_time': current_time,
+            'current_date': current_date[0],
+            'current_time': current_time[1],
             'humidity': current_weather.get('humidity', 0),
             'wind_speed': current_weather.get('wind_speed', 0),
             'precipitation': daily_weather.get('pop', 0),
