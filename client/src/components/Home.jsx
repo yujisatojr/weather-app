@@ -39,7 +39,7 @@ function Home() {
   // Fetch geo-coordinates (lat/lon) with a city name
   const handleSearchSubmit = async () => {
     try {
-      const response = await fetch(`/coordinates?city_name=${searchInput}`);
+      const response = await fetch(`/flask_server/coordinates?city_name=${searchInput}`);
       if (response.ok) {
         const data = await response.json();
         setLocations(data);
