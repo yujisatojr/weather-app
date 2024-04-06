@@ -4,6 +4,8 @@
 
 The Weather App is a simple web application that displays weather information using the OpenWeather API. This app is built with Flask and requires Python version >= 3.5.
 
+![Screenshot](https://my-aws-assets.s3.us-west-2.amazonaws.com/weather-app.png)
+
 ## Getting Started
 
 To get started with the Weather App, follow these simple steps:
