@@ -15,7 +15,7 @@ To get started with the Weather App, follow these simple steps:
 1. Navigate to the project directory:
 
    ```bash
-   cd flask_server
+   cd server
    ```
 
 2. Create a virtual environment and activate it:
