@@ -2,19 +2,16 @@ from flask import render_template, jsonify, request, send_from_directory
 import requests
 from app import app
 import os
-#from flask_server.config import api_key
-from flask_server.utils import format_unix_time, kelvin_to_celsius, celsius_to_fahrenheit
+from server.utils import format_unix_time, kelvin_to_celsius, celsius_to_fahrenheit
 
-#API_KEY = api_key
-# For production: get API key on Render
 API_KEY = os.environ.get('API_KEY')
 
-# Serve React Frontend
+# Serve React frontend
 @app.route("/")
 def index():
     return send_from_directory(app.static_folder, 'index.html')
 
-@app.route('/flask_server/coordinates')
+@app.route('/server/coordinates')
 def get_coordinates():
     # Use Geocoding API to convert city name to latitude and longitude
     city_name = request.args.get('city_name', default=None)
@@ -37,7 +34,7 @@ def get_coordinates():
     else:
         return jsonify([])
 
-@app.route('/flask_server/current_weather')
+@app.route('/server/current_weather')
 def get_current_weather():
     # Get the current weather data by city name
     lat = request.args.get('lat', default=None)
@@ -79,7 +76,7 @@ def get_current_weather():
     else:
         return jsonify({'error': 'Unable to fetch current weather'}), 500
     
-@app.route('/flask_server/historical_weather')
+@app.route('/server/historical_weather')
 def get_historical_weather():
     # Get the historical weather data by city name
 
