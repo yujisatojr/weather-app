@@ -55,7 +55,7 @@ function Current({ parentToChild, onWeatherDataChange }: any) {
       try {
         // Check if lat and lon are defined before making the API call
         if (lat !== undefined && lon !== undefined) {
-          const response = await fetch(`/flask_server/current_weather?lat=${lat}&lon=${lon}`);
+          const response = await fetch(`/server/current_weather?lat=${lat}&lon=${lon}`);
           if (response.ok) {
             const data = await response.json();
             setWeatherData(data);

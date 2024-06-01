@@ -29,7 +29,7 @@ function Historical({ parentToChild }: any) {
         return;
       }
   
-      const apiEndpoint = '/flask_server/historical_weather';
+      const apiEndpoint = '/server/historical_weather';
       const historicalWeatherData = [];
   
       // Calculate and call the endpoint for each of the last 7 days
